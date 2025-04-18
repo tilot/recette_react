@@ -32,7 +32,7 @@ export function FilterBar({ recipes, filterType, onFilter }) {
       ? allValues.filter((value) =>
           value.toLowerCase().includes(searchTerm.toLowerCase())
         )
-      : [];
+      : allValues;
 
   return (
     <div className="filter-bar">
