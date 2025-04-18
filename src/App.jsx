@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import recipes from './assets/json/recipes';
-import { FilterBar } from './components/FilterBar/FilterBar';
-import { SearchBar } from './components/SearchBar';
-import { ToggleBar } from './components/ToggleBar/ToggleBar';
 import { Recipe } from './components/Recipe/Recipe';
-import './App.css';
-import './assets/css/style.css';
+import { RecipePage } from './pages/RecipePage';
+import { SearchBar } from './components/SearchBar';
+import { FilterBar } from './components/FilterBar/FilterBar';
+import { ToggleBar } from './components/ToggleBar/ToggleBar';
 
 function App() {
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
@@ -22,75 +22,95 @@ function App() {
     }
   };
 
-  const handleFilter = (value) => {
-    const lowerValue = value.toLowerCase();
-
-    if (!activeFilters.includes(lowerValue)) {
-      const newFilters = [...activeFilters, lowerValue];
-      setActiveFilters(newFilters);
-      applyFilters(newFilters);
-    }
-  };
-
-  const handleRemoveFilter = (value) => {
-    const newFilters = activeFilters.filter((f) => f !== value);
+  const handleFilter = (filterValue) => {
+    const newFilters = [...activeFilters, filterValue];
     setActiveFilters(newFilters);
-    applyFilters(newFilters);
+
+    const results = recipes.filter((recipe) => {
+      const ingredients = recipe.ingredients.map((ing) => ing.ingredient.toLowerCase());
+      const ustensils = recipe.ustensils.map((ust) => ust.toLowerCase());
+      const appliance = recipe.appliance.toLowerCase();
+      return newFilters.every((filter) =>
+        ingredients.includes(filter) ||
+        ustensils.includes(filter) ||
+        appliance === filter
+      );
+    });
+
+    setFilteredRecipes(results);
   };
 
-  const applyFilters = (filters) => {
-    if (filters.length === 0) {
-      setFilteredRecipes(recipes);
-      return;
-    }
+  const handleRemoveFilter = (filterValue) => {
+    const newFilters = activeFilters.filter((f) => f !== filterValue);
+    setActiveFilters(newFilters);
 
-    const filtered = recipes.filter((recipe) =>
-      filters.every((filter) =>
-        recipe.ingredients.some((ing) =>
-          ing.ingredient.toLowerCase().includes(filter)
-        ) ||
-        recipe.ustensils.some((ust) => ust.toLowerCase().includes(filter)) ||
-        recipe.appliance.toLowerCase().includes(filter)
-      )
-    );
+    const results = recipes.filter((recipe) => {
+      const ingredients = recipe.ingredients.map((ing) => ing.ingredient.toLowerCase());
+      const ustensils = recipe.ustensils.map((ust) => ust.toLowerCase());
+      const appliance = recipe.appliance.toLowerCase();
+      return newFilters.every((filter) =>
+        ingredients.includes(filter) ||
+        ustensils.includes(filter) ||
+        appliance === filter
+      );
+    });
 
-    setFilteredRecipes(filtered);
+    setFilteredRecipes(results.length > 0 || newFilters.length > 0 ? results : recipes);
   };
+
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, '-');
 
   return (
-    <div>
-      <h1>Les Grands Plats</h1>
-
-      <SearchBar onSearch={handleSearch} />
-
-      <FilterBar
-        recipes={recipes}
-        filterType="ingredients"
-        onFilter={handleFilter}
-      />
-      <FilterBar
-        recipes={recipes}
-        filterType="ustensils"
-        onFilter={handleFilter}
-      /><FilterBar
-      recipes={recipes}
-      filterType="appliance"
-      onFilter={handleFilter}
-    />
-
-      <ToggleBar
-        activeFilters={activeFilters}
-        onRemoveFilter={handleRemoveFilter} // ✅ ici c’est bien défini
-      />
-
-      <h2>Recettes</h2>
-      {filteredRecipes.map((recipe) => (
-        <div key={recipe.id}>
-          <h3>{recipe.name}</h3>
-          <p>{recipe.description}</p>
-        </div>
-      ))}
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <SearchBar onSearch={handleSearch} />
+              <div className="filters">
+                <FilterBar
+                  recipes={recipes}
+                  filterType="ingredients"
+                  onFilter={handleFilter}
+                />
+                <FilterBar
+                  recipes={recipes}
+                  filterType="ustensils"
+                  onFilter={handleFilter}
+                />
+                <FilterBar
+                  recipes={recipes}
+                  filterType="appliance"
+                  onFilter={handleFilter}
+                />
+              </div>
+              <ToggleBar
+                activeFilters={activeFilters}
+                onRemoveFilter={handleRemoveFilter}
+              />
+              <div className="recipe-list">
+                {filteredRecipes.map((r) => (
+                  <Link
+                    key={r.id}
+                    to={`/recipe/${r.id}/${slugify(r.name)}`}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <Recipe data={r} />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          }
+        />
+        <Route path="/recipe/:id/:name" element={<RecipePage />} />
+      </Routes>
+    </Router>
   );
 }
 

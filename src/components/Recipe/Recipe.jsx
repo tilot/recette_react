@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Recipe.css';
 
-export function Recipe({ data }) {
+export default function Recipe({ data }) {
   return (
     <Link to={`/recette/${data.id}`} className="recipe-link">
       <div className="recipe-card">
