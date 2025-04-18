@@ -1,6 +1,7 @@
 import { useState } from 'react';
 // import './SearchBar.css'; // Importation du CSS séparé
 import "../../assets/css/style.css"; // Importation du CSS global
+import searchLogo from "../../assets/img/search.svg"; // Importation de l'image de recherche
 export function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -26,7 +27,7 @@ export function SearchBar({ onSearch }) {
         onChange={handleSearch}
       />
       <button className="search-img">
-        <img src="/search.svg" alt="search" className="search-logo" />
+        <img src={searchLogo} alt="search" className="search-logo" />
       </button>
     </div>
   );
