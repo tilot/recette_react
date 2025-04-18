@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import recipes from './assets/json/recipes';
 import  Recipe  from './components/Recipe/Recipe';
 import { RecipePage } from './pages/RecipePage';
-import { SearchBar } from './components/SearchBar';
+import { SearchBar } from './components/SearchBar/SearchBar';
 import { FilterBar } from './components/FilterBar/FilterBar';
 import { ToggleBar } from './components/ToggleBar/ToggleBar';
 

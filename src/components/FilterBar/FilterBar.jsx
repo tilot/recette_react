@@ -36,6 +36,7 @@ export function FilterBar({ recipes, filterType, onFilter }) {
 
   return (
     <div className="filter-bar">
+      {/* <button class="dropdown-item btn-tag-ustensil" type="button" value="cuillère à soupe">Cuillère à soupe</button> */}
       <div className="filter-header" onClick={() => setIsOpen(!isOpen)}>
         <span>{filterType}</span>
         <span className="caret">{isOpen ? '▴' : '▾'}</span>

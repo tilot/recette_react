@@ -1,4 +1,4 @@
-import './ToggleBar.css';
+import "../../assets/css/style.css"; // Importation du CSS global
 
 export function ToggleBar({ activeFilters, onRemoveFilter }) {
   return (
