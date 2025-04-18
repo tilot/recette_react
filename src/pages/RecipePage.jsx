@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import recipes from '../assets/json/recipes';
-import { Recipe } from '../components/Recipe/Recipe';
+import Recipe from '../components/Recipe/Recipe';
+
 
 export function RecipePage() {
    const { id } = useParams(); // 🆔 récupère l'ID dans l'URL

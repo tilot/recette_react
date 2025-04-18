@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import recipes from './assets/json/recipes';
-import { Recipe } from './components/Recipe/Recipe';
+import  Recipe  from './components/Recipe/Recipe';
 import { RecipePage } from './pages/RecipePage';
 import { SearchBar } from './components/SearchBar';
 import { FilterBar } from './components/FilterBar/FilterBar';
@@ -58,12 +59,12 @@ function App() {
     setFilteredRecipes(results.length > 0 || newFilters.length > 0 ? results : recipes);
   };
 
-  const slugify = (str) =>
-    str
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s+/g, '-');
+  // const slugify = (str) =>
+  //   str
+  //     .toLowerCase()
+  //     .normalize("NFD")
+  //     .replace(/[\u0300-\u036f]/g, "")
+  //     .replace(/\s+/g, '-');
 
   return (
     <Router>
@@ -97,18 +98,19 @@ function App() {
               <div className="recipe-list">
                 {filteredRecipes.map((r) => (
                   <Link
-                    key={r.id}
-                    to={`/recipe/${r.id}/${slugify(r.name)}`}
-                    style={{ textDecoration: 'none', color: 'inherit' }}
-                  >
-                    <Recipe data={r} />
-                  </Link>
+                  to={`/recette/${r.id}`}
+                  key={r.id}
+                  className="recipe-link"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <Recipe data={r} />
+                </Link>
                 ))}
               </div>
             </div>
           }
         />
-        <Route path="/recipe/:id/:name" element={<RecipePage />} />
+        <Route path="/recette/:id" element={<RecipePage />} />
       </Routes>
     </Router>
   );
