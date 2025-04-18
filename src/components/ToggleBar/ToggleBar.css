@@ -1,0 +1,26 @@
+.toggle-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .toggle-chip {
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .toggle-chip:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .remove-icon {
+    margin-left: 8px;
+    color: #888;
+  }
+  

@@ -1,0 +1,45 @@
+.recipe-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .recipe-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    transition: box-shadow 0.2s ease;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  .recipe-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-card h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .ingredients-list {
+    padding-left: 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .ingredients-list li {
+    list-style: disc;
+    color: #444;
+  }
+  
+  .time {
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+  
+  .description {
+    margin: 0.5rem 0 1rem;
+    color: #555;
+  }
+  
