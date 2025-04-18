@@ -7,6 +7,7 @@ import { RecipePage } from './RecipePage';
 import { SearchBar } from '../components/SearchBar';
 import { FilterBar } from '../components/FilterBar/FilterBar';
 import { ToggleBar } from '../components/ToggleBar/ToggleBar';
+import '../assets/css/style.scss'
 
 function HomePage() {
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
@@ -69,7 +70,8 @@ function HomePage() {
   return (
 
             <div>
-              <SearchBar onSearch={handleSearch} />
+              <SearchBar className ='search position relative'
+              onSearch={handleSearch} />
               <div className="filters">
                 <FilterBar
                   recipes={recipes}
